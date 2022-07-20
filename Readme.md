@@ -1,11 +1,9 @@
-Starting this project with the aim of learning by doing
-
 Services(in production):
 
-    1 - Get student name and id
+    1 - Get student name and id (normal requisition).
     
-    2 - Verify if student be present or absent
+    2 - Send students names, returning who is present and absent (clientside streaming)
     
-    3 - Pegar nota do aluno em ordem decrescente
+    3 - Get student grade in descending order (serverside streaming)
     
-    4 - Calculate the average a verify if the student passed or failed
+    4 - Calculate the average a verify if the student passed or failed (Duplex streaming)
