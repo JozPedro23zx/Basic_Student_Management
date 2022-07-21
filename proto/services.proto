@@ -2,6 +2,7 @@ syntax = "proto3";
 
 service StudentsManagement{
     rpc GetStudent(Student) returns (Student) {};
+    rpc GetGrade(Student) returns (Subjects) {};
 }
 
 message Student {

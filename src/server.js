@@ -36,3 +36,7 @@ function getStudent(call, callback){
     let result = search ? search : "student not found"
     callback(null, result)
 }
+
+function getGrade(call, callback){
+    
+}
