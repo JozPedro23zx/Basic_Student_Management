@@ -1,14 +1,19 @@
-syntax = "proto3"
+syntax = "proto3";
 
 service StudentsManagement{
-    rpc GetStudent() returns () {}
+    rpc GetStudent(Student) returns (Student) {};
 }
 
 message Student {
-    int32 id = 1
-    string name = 2
-    int32 grammar = 3
-    int32 mathematics = 4
-    int32 story = 5
-    int32 biology = 6
+    int32 id = 1;
+    string name = 2;
+}
+
+message Subjects {
+    int32 id = 1;
+    Student student = 2;
+    int32 grammar = 3;
+    int32 mathematics = 4;
+    int32 story = 5;
+    int32 biology = 6;
 }
