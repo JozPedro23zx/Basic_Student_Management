@@ -16,7 +16,7 @@ const studentsProto = grpc.loadPackageDefinition(packageDefinition);
 const server = new grpc.Server();
 
 server.addService(studentsProto.StudentsManagement.service, {
-    getStudents: getStudents
+    getStudent: getStudent
 })
 
 server.bindAsync(
@@ -29,9 +29,10 @@ server.bindAsync(
 )
 
 
-//Services
-function getStudents (call, callback){
-    console.log('call',call.request.name)
-    let search = db.find(name => name == call.request.name)
-    console.log("search", search)
+//SERVICES
+function getStudent(call, callback){
+
+    let search = db.find(student => student.name == call.request.name)
+    let result = search ? search : "student not found"
+    callback(null, result)
 }
