@@ -1,0 +1,41 @@
+[
+    {
+        "id":1,
+        "grammar":5,
+        "mathematics":7,
+        "story": 3,
+        "biology": 4
+    },
+
+    {
+        "id":2,
+        "grammar":9,
+        "mathematics":2,
+        "story": 6,
+        "biology": 6
+    },
+
+    {
+        "id":3,
+        "grammar":7,
+        "mathematics":8,
+        "story": 1,
+        "biology": 5
+    },
+
+    {
+        "id":4,
+        "grammar":2,
+        "mathematics":2,
+        "story": 3,
+        "biology": 1
+    },
+
+    {
+        "id":5,
+        "grammar":8,
+        "mathematics":9,
+        "story": 8,
+        "biology": 6
+    }
+]
