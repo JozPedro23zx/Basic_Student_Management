@@ -2,17 +2,34 @@ syntax = "proto3";
 
 service StudentsManagement{
     rpc GetStudent(Student) returns (Student) {};
-    rpc GetGrade(Student) returns (Subjects) {};
+    rpc CalculateAverage(Classroom) returns (stream StudentResponse) {};
+    rpc TakeAttendance(stream Student) returns (Attendance) {};
 }
+
+message StudentResponse{
+    string message = 1;
+}
+
+message Attendance{
+    repeated Student studentsPresents = 1;
+    repeated Student studentsAbsent = 2;
+}
+
+message Classroom{
+    int32 id = 1;
+    string room = 2;
+    string currentlyLeson = 3;
+} 
 
 message Student {
     int32 id = 1;
     string name = 2;
+    string room = 3;
 }
 
 message Subjects {
     int32 id = 1;
-    Student student = 2;
+    int32 idStudent = 2;
     int32 grammar = 3;
     int32 mathematics = 4;
     int32 story = 5;
