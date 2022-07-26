@@ -20,7 +20,61 @@ const client = new StudentsManagement(
 
 
 //CALL SERVICES
-client.getStudent({name: "Fernando"}, function(err, response){
-    if(err) console.log(err)
-    response.id == 0 ? console.log("Student not found") : console.log(response)
-})
+function main(){
+
+    studentData();
+    console.log("\n ===========================================")
+    averageList();
+    console.log("\n ===========================================")
+    attendanceStudents();
+}
+
+function studentData(){
+    client.getStudent({name: "Fernando"}, function(err, response){
+        if(err) console.log(err)
+        response.id == 0 ? console.log("Student not found") : console.log(response)
+    })
+}
+
+function averageList(){
+    let call = client.calculateAverage({room: "A"});
+
+    call.on('data', (response)=>{
+        console.log(response.message)
+        console.log("================")
+    })
+
+    call.on('end', ()=>{
+        console.log("This is students average")
+    })
+}
+
+function attendanceStudents(){
+    let studentsList = [{
+        name: "Fernando",
+        room: "A"
+    },{
+        name: "Bruno",
+        room: "A"
+    },{
+        name: "Ana",
+        room: "A"
+    },
+    {
+        name: "Kakaroto",
+        room: "A"
+    }]
+
+    let call = client.takeAttendance((err, response)=>{
+        if(err) console.log(err)
+        console.log(response)
+    });
+
+    studentsList.map((student)=>{
+        call.write(student)
+    })
+
+    call.end()
+}
+
+main()
