@@ -6,4 +6,4 @@ Services(in development):
     
     3 - Send students names your room, returning who is present and absent (clientside streaming)
     
-    4 - Get students grade (duplex streaming)
+    4 - Get the highest grade of specific subject (duplex streaming)
