@@ -4,10 +4,15 @@ service StudentsManagement{
     rpc GetStudent(Student) returns (Student) {};
     rpc CalculateAverage(Classroom) returns (stream StudentResponse) {};
     rpc TakeAttendance(stream Student) returns (Attendance) {};
+    rpc GetBestGrade(stream StudentRequest) returns (stream Student) {};
 }
 
 message StudentResponse{
     string message = 1;
+}
+
+message StudentRequest{
+    string grade = 1;
 }
 
 message Attendance{

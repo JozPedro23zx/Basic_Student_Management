@@ -21,7 +21,8 @@ const server = new grpc.Server();
 server.addService(studentsProto.StudentsManagement.service, {
     getStudent: getStudent,
     calculateAverage: calculateAverage, 
-    takeAttendance: takeAttendance
+    takeAttendance: takeAttendance,
+    getBestGrade: getBestGrade
 })
 
 server.bindAsync(
@@ -49,7 +50,7 @@ function calculateAverage(call){
         
         let average = (subjects.biology + subjects.grammar + subjects.mathematics + subjects.story) / 4
         
-        
+
         average > 5 ? 
         call.write({message: `${students[i].name} has been APPROVED with average: '${average}'`}) :
         call.write({message: `Unfortunately, ${students[i].name} has been FAILED with average '${average}'`})
@@ -69,11 +70,51 @@ function takeAttendance(call, callback){
             absentStudents.splice(indexStudent, 1)
         }
     })
-
+    
     call.on('end', ()=>{
         callback(null, {
             studentsPresents: presentStudents,
             studentsAbsent: absentStudents,
         })
+    })
+}
+
+function getBestGrade(call){
+    var gradeData;
+
+    function selectGrade(gradeName){
+        return function(obj){
+            const newObj = {};
+            newObj["grade"] = obj[gradeName];
+            newObj["idStudent"] = obj["idStudent"];
+            return newObj;
+        }
+    }
+
+    function highestGrade(list){
+        let bigger = {grade: 0, idStudent: 0}
+
+        for(var i = 0; i < list.length; i++){
+            if(list[i].grade > bigger.grade){
+                bigger = list[i]
+            }
+        }
+        return bigger
+    }
+
+    call.on('data', async (data) =>{
+        console.log("\n Calculating the highest grade of "+ (data.grade).toUpperCase() +"...")
+        gradeData = data.grade
+        let gradeList = subjectsDataBase.map(selectGrade(gradeData))
+        let result = await highestGrade(gradeList)
+
+        let student = studentsDataBase.find(person => person.id == result.idStudent)
+
+        call.write(student)
+    })
+
+    call.on('end', ()=>{
+        console.log("Awaiting more request")
+        call.end()
     })
 }
