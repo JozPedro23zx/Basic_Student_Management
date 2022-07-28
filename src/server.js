@@ -66,7 +66,7 @@ function calculateAverage(call){
 // Clientside streaming
 function takeAttendance(call, callback){
     let presentStudents = [];
-    let absentStudents = studentsDataBase;
+    let absentStudents = studentsDataBase.map(x => x);
 
     call.on('data', (data)=>{
         indexStudent = absentStudents.findIndex((student) => student.name == data.name)
@@ -116,8 +116,8 @@ function getHighestGrade(call){
         console.log("\n Calculating the highest grade of "+ (data.grade).toUpperCase() +"...")
         gradeData = data.grade
         let gradeList = subjectsDataBase.map(selectGrade(gradeData))
-        let result = await highestGrade(gradeList)
-
+        let result = highestGrade(gradeList)
+        
         let student = studentsDataBase.find(person => person.id == result.idStudent)
 
         call.write(student)
