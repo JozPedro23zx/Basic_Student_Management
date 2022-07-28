@@ -1,4 +1,4 @@
-Services(in development):
+Services:
 
     1 - Get student grade(normal requisition).
     
