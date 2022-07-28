@@ -37,7 +37,7 @@ async function main(){
 function studentData(){
     let studentName = "Fernando"
     client.getStudentGrade({name: studentName}, function(err, response){
-        console.log("Search grade from "+studentName+"...")
+        console.log("Search grade of "+studentName+"...")
 
         if(err) console.log(err)
         response.id == 0 ? console.log("Student not found") : console.log(response);
@@ -55,7 +55,7 @@ function passedOrFailed(){
     })
     
     call.on('end', ()=>{
-        console.log("This is students average");
+        console.log("\n This is students average");
         console.log("\n =========================================== \n");
     })
 }
@@ -100,19 +100,19 @@ async function highestGrade(){
         console.log(response.name)
     })
 
-    console.log("\n Highest grammar grade goes to: ")
+    console.log("\nHighest grammar grade goes to: ")
     dublexCall.write({grade: 'grammar'})
     await sleep(2000)
 
-    console.log("\n Highest mathematics grade goes to: ")
+    console.log("\nHighest mathematics grade goes to: ")
     dublexCall.write({grade: 'mathematics'})
     await sleep(2000)
 
-    console.log("\n Highest story grade goes to: ")
+    console.log("\nHighest story grade goes to: ")
     dublexCall.write({grade: 'story'})
     await sleep(2000)
 
-    console.log("\n Highest biology grade goes to: ")
+    console.log("\nHighest biology grade goes to: ")
     dublexCall.write({grade: 'biology'})
 
     dublexCall.end()
