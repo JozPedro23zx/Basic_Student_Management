@@ -8,7 +8,7 @@ const options ={
     enums: String,
     defaults: true,
     oneofs: true
-}
+};
 
 var packageDefinition = protoLoader.loadSync(PROTO_PATH, options);
 const StudentsManagement = grpc.loadPackageDefinition(packageDefinition).StudentsManagement;
@@ -21,41 +21,40 @@ const client = new StudentsManagement(
 
 //CALL SERVICES
 async function main(){
-
     studentData();
-    await sleep(3000);
 
-    averageList();
-    await sleep(4000);
+    // passedOrFailed();
 
-    attendanceStudents();
-    await sleep(4000);
+    // attendanceStudents();
 
-    bestGrade();
+    // highestGrade();
 }
 
+// Normal requisition
 function studentData(){
-    client.getStudent({name: "Fernando"}, function(err, response){
+    client.getStudentGrade({name: "Fernando"}, function(err, response){
         if(err) console.log(err)
-        response.id == 0 ? console.log("Student not found") : console.log(response)
-        console.log("\n =========================================== \n")
-    })
+        response.id == 0 ? console.log("Student not found") : console.log(response);
+        console.log("\n =========================================== \n");
+    });
 }
 
-function averageList(){
-    let call = client.calculateAverage({room: "A"});
+// Serverside streaming
+function passedOrFailed(){
+    let call = client.calculateAverage({});
     
     call.on('data', (response)=>{
-        console.log(response.message)
-        console.log("================")
+        console.log(response.message);
+        console.log("================");
     })
     
     call.on('end', ()=>{
-        console.log("This is students average")
-        console.log("\n =========================================== \n")
+        console.log("This is students average");
+        console.log("\n =========================================== \n");
     })
 }
 
+// Clientside streaming
 function attendanceStudents(){
     let studentsList = [{
         name: "Fernando",
@@ -70,7 +69,7 @@ function attendanceStudents(){
     {
         name: "Kakaroto",
         room: "A"
-    }]
+    }];
     
     let call = client.takeAttendance((err, response)=>{
         if(err) console.log(err)
@@ -79,24 +78,25 @@ function attendanceStudents(){
     
     studentsList.map((student)=>{
         call.write(student)
-    })
+    });
     
-    call.end()
+    call.end();
 }
 
-async function bestGrade(){
-    let dublexCall = client.getBestGrade()
+// Dureplex staming
+async function highestGrade(){
+    let dublexCall = client.getHighestGrade()
 
     dublexCall.on('data', response =>{
         console.log(response)
     })
 
     dublexCall.write({grade: 'grammar'})
-    await sleep(4000)
+    await sleep(3000)
     dublexCall.write({grade: 'mathematics'})
-    await sleep(4000)
+    await sleep(3000)
     dublexCall.write({grade: 'story'})
-    await sleep(4000)
+    await sleep(3000)
     dublexCall.write({grade: 'biology'})
 
     dublexCall.end()

@@ -1,31 +1,26 @@
 [
     {
         "id": 1,
-        "name": "Bruno",
-        "room": "A"
+        "name": "Bruno"
     },
 
     {
         "id": 2,
-        "name": "Maria",
-        "room": "A"
+        "name": "Maria"
     },
 
     {
         "id": 3,
-        "name": "Fernando",
-        "room": "A"
+        "name": "Fernando"
     },
 
     {
         "id": 4,
-        "name": "Ana",
-        "room": "A"
+        "name": "Ana"
     },
 
     {
         "id": 5,
-        "name": "Jascinto",
-        "room": "A"
+        "name": "Jascinto"
     }
 ]
