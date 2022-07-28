@@ -22,19 +22,26 @@ const client = new StudentsManagement(
 //CALL SERVICES
 async function main(){
     studentData();
+    await sleep(3000);
 
-    // passedOrFailed();
+    passedOrFailed();
+    await sleep(3000);
 
-    // attendanceStudents();
+    attendanceStudents();
+    await sleep(3000);
 
-    // highestGrade();
+    await highestGrade();
 }
 
 // Normal requisition
 function studentData(){
-    client.getStudentGrade({name: "Fernando"}, function(err, response){
+    let studentName = "Fernando"
+    client.getStudentGrade({name: studentName}, function(err, response){
+        console.log("Search grade from "+studentName+"...")
+
         if(err) console.log(err)
         response.id == 0 ? console.log("Student not found") : console.log(response);
+
         console.log("\n =========================================== \n");
     });
 }
@@ -44,8 +51,7 @@ function passedOrFailed(){
     let call = client.calculateAverage({});
     
     call.on('data', (response)=>{
-        console.log(response.message);
-        console.log("================");
+        console.log('\n'+response.message);
     })
     
     call.on('end', ()=>{
@@ -74,12 +80,15 @@ function attendanceStudents(){
     let call = client.takeAttendance((err, response)=>{
         if(err) console.log(err)
         console.log(response)
+
+        console.log("\n =========================================== \n");
     });
     
     studentsList.map((student)=>{
         call.write(student)
     });
     
+
     call.end();
 }
 
@@ -88,15 +97,22 @@ async function highestGrade(){
     let dublexCall = client.getHighestGrade()
 
     dublexCall.on('data', response =>{
-        console.log(response)
+        console.log(response.name)
     })
 
+    console.log("\n Highest grammar grade goes to: ")
     dublexCall.write({grade: 'grammar'})
-    await sleep(3000)
+    await sleep(2000)
+
+    console.log("\n Highest mathematics grade goes to: ")
     dublexCall.write({grade: 'mathematics'})
-    await sleep(3000)
+    await sleep(2000)
+
+    console.log("\n Highest story grade goes to: ")
     dublexCall.write({grade: 'story'})
-    await sleep(3000)
+    await sleep(2000)
+
+    console.log("\n Highest biology grade goes to: ")
     dublexCall.write({grade: 'biology'})
 
     dublexCall.end()
