@@ -1,6 +1,6 @@
 Services(in development):
 
-    1 - Get student name and id (normal requisition).
+    1 - Get student grade(normal requisition).
     
     2 - Check which students passed or failed (serverside streaming)
     
