@@ -1,4 +1,9 @@
-Services:
+## Simple grpc application with node
+Go to src folder and run:
+- node client
+- node server
+
+## Services:
 
     1 - Get student grade(normal requisition).
     
